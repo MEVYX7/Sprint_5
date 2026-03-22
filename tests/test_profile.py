@@ -1,14 +1,13 @@
 from locators import Locators
 from data import Data
-from selenium import webdriver
+from urls import Urls
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import time
 class TestProfile:
 
-    def test_go_to_profile(self):
-        driver = webdriver.Chrome()
-        driver.get(Data.BASE_URL)
+    def test_go_to_profile(self, driver):
+        driver.get(Urls.BASE_URL)
 
         driver.find_element(*Locators.LOGIN_BUTTON_MAIN).click()
         driver.find_element(*Locators.LOGIN_EMAIL).send_keys(Data.VALID_EMAIL)
@@ -21,11 +20,9 @@ class TestProfile:
         driver.find_element(*Locators.PROFILE_BUTTON).click()
 
         assert "profile" in driver.current_url
-        driver.quit()
     
-    def test_logo_and_constructor(self):
-        driver = webdriver.Chrome()
-        driver.get(Data.BASE_URL)
+    def test_logo_and_constructor(self, driver):
+        driver.get(Urls.BASE_URL)
 
         driver.find_element(*Locators.LOGIN_BUTTON_MAIN).click()
         driver.find_element(*Locators.LOGIN_EMAIL).send_keys(Data.VALID_EMAIL)
@@ -35,17 +32,15 @@ class TestProfile:
         driver.find_element(*Locators.PROFILE_BUTTON).click()
         driver.find_element(*Locators.CONSTRUCTOR_BUTTON).click()
 
-        assert driver.current_url == Data.BASE_URL
+        assert driver.current_url == Urls.BASE_URL
 
         driver.find_element(*Locators.PROFILE_BUTTON).click()
         driver.find_element(*Locators.LOGO).click()
 
-        assert driver.current_url == Data.BASE_URL
-        driver.quit()
+        assert driver.current_url == Urls.BASE_URL
 
-    def test_logout(self):
-        driver = webdriver.Chrome()
-        driver.get(Data.BASE_URL)
+    def test_logout(self, driver):
+        driver.get(Urls.BASE_URL)
 
         driver.find_element(*Locators.LOGIN_BUTTON_MAIN).click()
         driver.find_element(*Locators.LOGIN_EMAIL).send_keys(Data.VALID_EMAIL)
@@ -59,4 +54,3 @@ class TestProfile:
 
         login_sumbit = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.LOGIN_SUBMIT))
         assert login_sumbit.is_displayed()
-        driver.quit()

@@ -1,14 +1,13 @@
 from locators import Locators
 from data import Data
+from urls import Urls
 from generators import Generators
-from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class TestRegister:
-    def test_register_success(self):
-        driver = webdriver.Chrome()
-        driver.get(Data.BASE_URL)
+    def test_register_success(self, driver):
+        driver.get(Urls.BASE_URL)
 
         driver.find_element(*Locators.LOGIN_BUTTON_MAIN).click()
         driver.find_element(*Locators.REGISTER_BUTTON).click()
@@ -23,12 +22,10 @@ class TestRegister:
 
         WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.LOGIN_SUBMIT))
 
-        assert driver.current_url != Data.BASE_URL
-        driver.quit()
+        assert driver.current_url != Urls.BASE_URL
 
-    def test_register_invalid_password(self):
-        driver = webdriver.Chrome()
-        driver.get(Data.BASE_URL)
+    def test_register_invalid_password(self, driver):
+        driver.get(Urls.BASE_URL)
 
         driver.find_element(*Locators.LOGIN_BUTTON_MAIN).click()
         driver.find_element(*Locators.REGISTER_BUTTON).click()
@@ -40,4 +37,3 @@ class TestRegister:
 
         error_password = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.ERROR_PASSWORD))
         assert error_password.is_displayed()
-        driver.quit()
