@@ -22,7 +22,7 @@ class TestRegister:
 
         WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.LOGIN_SUBMIT))
 
-        assert driver.current_url != Urls.BASE_URL
+        assert driver.current_url == Urls.LOGIN_URL
 
     def test_register_invalid_password(self, driver):
         driver.get(Urls.BASE_URL)
